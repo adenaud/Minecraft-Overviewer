@@ -221,7 +221,10 @@ overviewer.util = {
 
         overviewer.map = L.map('mcmap', {crs: L.CRS.Simple});
 
+        var last_rendertime = overviewerConfig.tilesets[0].last_rendertimee;
+
         overviewer.map.attributionControl.setPrefix(
+            'Last render :' + new Date(last_rendertime * 1000).toLocaleTimeString("fr") + ' - ' +
             '<a href="https://overviewer.org">Overviewer/Leaflet</a>');
 
         overviewer.map.on('baselayerchange', function(ev) {
