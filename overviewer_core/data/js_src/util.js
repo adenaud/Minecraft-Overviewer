@@ -56,9 +56,16 @@ overviewer.util = {
                 var r_z = Math.floor(Math.floor(w_coords.z / 16.0) / 32.0);
                 var r_name = "r." + r_x + "." + r_z + ".mca";
 
+                var offset = 0; // Offset = surface level - render depth max
+                if (ovconf.path.substring(0,4) === "mine") {
+                    var level = Number(ovconf.path.replace("mine", ""))
+                    var max = 5 + level * 5
+                    offset = 64 - max;
+                }
+
                 this.coord_box.innerHTML = "X " +
-                                           Math.round(w_coords.x) +
-                                           " Z " + Math.round(w_coords.z) +
+                                           Math.round(w_coords.x + offset) +
+                                           " Z " + Math.round(w_coords.z - offset) +
                                            " (" + r_name + ")";
             },
             onAdd: function() {
