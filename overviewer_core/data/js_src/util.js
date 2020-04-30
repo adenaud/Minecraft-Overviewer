@@ -221,10 +221,8 @@ overviewer.util = {
 
         overviewer.map = L.map('mcmap', {crs: L.CRS.Simple});
 
-        var last_rendertime = overviewerConfig.tilesets[0].last_rendertimee;
-
         overviewer.map.attributionControl.setPrefix(
-            'Last render :' + new Date(last_rendertime * 1000).toLocaleTimeString("fr") + ' - ' +
+            '<span id="last_rendertime"></span> - ' +
             '<a href="https://overviewer.org">Overviewer/Leaflet</a>');
 
         overviewer.map.on('baselayerchange', function(ev) {
@@ -247,6 +245,10 @@ overviewer.util = {
                         newMapCoords,
                         overviewer.map.getZoom(),
                         { animate: false });
+
+                const tsc = overviewer.current_layer[overviewer.current_world].tileSetConfig;
+                document.getElementById('last_rendertime').innerText =
+                    'Last render :' + new Date(tsc.last_rendertime * 1000).toLocaleTimeString("fr");
             }
             
             // before updating the current_layer, remove the marker control, if it exists
